@@ -12,45 +12,20 @@ const PostGrid = ({ posts, initialCount = 6 }) => {
   const hasMore = visibleCount < posts.length;
   
   return (
-    <div style={{ marginBottom: '60px' }}>
+    <div className="mb-[60px]">
       {/* Title with orange lines */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '30px'
-      }}>
-        <div style={{ 
-          height: '2px', 
-          width: '40px', 
-          backgroundColor: '#FF6B00', 
-          marginRight: '15px' 
-        }}></div>
-        <h2 style={{
-          fontSize: '24px',
-          fontWeight: 'bold',
-          color: '#333',
-          margin: '0'
-        }}>
+      <div className="flex items-center justify-center mb-[30px]">
+        <div className="h-[2px] w-[40px] bg-[#FF6B00] mr-[15px]"></div>
+        <h2 className="text-2xl font-bold text-[#333] m-0">
           All Posts
         </h2>
-        <div style={{ 
-          height: '2px', 
-          width: '40px', 
-          backgroundColor: '#FF6B00', 
-          marginLeft: '15px' 
-        }}></div>
+        <div className="h-[2px] w-[40px] bg-[#FF6B00] ml-[15px]"></div>
       </div>
       
       {/* Grid of posts */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-        gap: '25px',
-        marginBottom: '30px'
-      }}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-[25px] mb-[30px]">
         {visiblePosts.map(post => (
-          <div key={post.id} style={{ minHeight: '360px' }}>
+          <div key={post.id} className="min-h-[360px]">
             <PostCard post={post} />
           </div>
         ))}
@@ -58,23 +33,10 @@ const PostGrid = ({ posts, initialCount = 6 }) => {
       
       {/* Load more button */}
       {hasMore && (
-        <div style={{ textAlign: 'center' }}>
+        <div className="text-center">
           <button 
             onClick={handleLoadMore}
-            style={{
-              backgroundColor: '#FF6B00',
-              color: 'white',
-              border: 'none',
-              borderRadius: '25px',
-              padding: '12px 30px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s ease',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-            }}
-            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#E55000'}
-            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#FF6B00'}
+            className="bg-[#FF6B00] text-white border-none rounded-[25px] px-[30px] py-[12px] text-base font-bold cursor-pointer transition-colors duration-300 shadow-md hover:bg-[#E55000]"
           >
             Load More
           </button>

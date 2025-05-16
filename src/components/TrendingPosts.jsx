@@ -25,45 +25,21 @@ const TrendingPosts = ({ filteredPosts }) => {
   }
   
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: '15px'
-    }}>
-      <h2 style={{ 
-        fontSize: '24px', 
-        fontWeight: 'bold', 
-        color: '#333',
-        marginBottom: '15px',
-        display: 'flex',
-        alignItems: 'center',
-        borderBottom: '2px solid #eaeaea',
-        paddingBottom: '10px'
-      }}>
+    <div className="flex flex-col gap-[15px]">
+      <h2 className="text-2xl font-bold text-[#333] mb-[15px] flex items-center border-b-2 border-[#eaeaea] pb-[10px]">
         Trending Now
-        <div style={{ 
-          marginLeft: '10px', 
-          height: '4px', 
-          width: '40px', 
-          backgroundColor: '#FF6B00', 
-          borderRadius: '2px' 
-        }}></div>
+        <div className="ml-[10px] h-1 w-[40px] bg-[#FF6B00] rounded-sm"></div>
       </h2>
       
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div className="flex flex-col gap-5">
         {trendingPosts.length > 0 ? (
           trendingPosts.map(post => (
-            <div key={post.id} style={{ 
-              height: '120px',
-              borderBottom: '1px solid #eaeaea',
-              paddingBottom: '15px',
-              marginBottom: '5px'
-            }}>
+            <div key={post.id} className="h-[120px] border-b border-[#eaeaea] pb-[15px] mb-[5px]">
               <PostCard post={post} variant="trending" size="small" />
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '20px' }}>
+          <div className="text-center p-5">
             <p>No trending posts found in this category.</p>
           </div>
         )}

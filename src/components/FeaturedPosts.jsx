@@ -13,23 +13,11 @@ const FeaturedPosts = ({ filteredPosts }) => {
   
   if (featuredPosts.length === 0) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ 
-          fontSize: '24px', 
-          fontWeight: 'bold', 
-          color: '#333',
-          marginBottom: '20px',
-          borderBottom: '2px solid #eaeaea',
-          paddingBottom: '10px'
-        }}>
+      <div className="flex flex-col">
+        <h2 className="text-2xl font-bold text-[#333] mb-5 border-b-2 border-[#eaeaea] pb-[10px]">
           Featured Posts
         </h2>
-        <div style={{ 
-          padding: '40px', 
-          textAlign: 'center', 
-          backgroundColor: '#f9f9f9',
-          borderRadius: '8px' 
-        }}>
+        <div className="p-10 text-center bg-[#f9f9f9] rounded-lg">
           <p>No posts found in this category.</p>
         </div>
       </div>
@@ -37,40 +25,23 @@ const FeaturedPosts = ({ filteredPosts }) => {
   }
   
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <h2 style={{ 
-        fontSize: '24px', 
-        fontWeight: 'bold', 
-        color: '#333',
-        marginBottom: '20px',
-        borderBottom: '2px solid #eaeaea',
-        paddingBottom: '10px'
-      }}>
+    <div className="flex flex-col">
+      <h2 className="text-2xl font-bold text-[#333] mb-5 border-b-2 border-[#eaeaea] pb-[10px]">
         Featured Posts
       </h2>
       
       {/* Main featured post (vertical) - ROW 1 */}
       {mainPost && (
-        <div style={{ marginBottom: '30px' }}>
+        <div className="mb-[30px]">
           <PostCard post={mainPost} variant="featured" size="large" />
         </div>
       )}
       
       {/* Two smaller posts (horizontal row) - ROW 2 */}
       {secondaryPosts.length > 0 && (
-        <div style={{ 
-          display: 'flex', 
-          gap: '25px', 
-          flexWrap: 'wrap',
-          backgroundColor: '#f9f9f9',
-          padding: '20px',
-          borderRadius: '8px'
-        }}>
+        <div className="flex gap-[25px] flex-wrap bg-[#f9f9f9] p-5 rounded-lg">
           {secondaryPosts.map(post => (
-            <div key={post.id} style={{ 
-              flex: '1 1 calc(50% - 15px)',
-              minWidth: '280px'
-            }}>
+            <div key={post.id} className="flex-1 min-w-[280px] basis-[calc(50%-15px)]">
               <PostCard post={post} variant="featured" size="medium" />
             </div>
           ))}

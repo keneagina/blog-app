@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import BlogHome from './pages/BlogHome';
 import FullPostView from './pages/FullPostView';
-import './App.css';
+
 
 // Add Google Fonts
 const fontLinkElement = document.createElement('link');
@@ -13,9 +13,9 @@ document.head.appendChild(fontLinkElement);
 function App() {
   return (
     <Router>
-      <div style={{ backgroundColor: 'white', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif" }}>
+      <div className="bg-white min-h-screen font-['Open_Sans',sans-serif]">
         <Header />
-        <div className="container" style={{ backgroundColor: 'white' }}>
+        <div className="container bg-white">
           <Routes>
             <Route path="/" element={<BlogHome />} />
             <Route path="/post/:postSlug" element={<FullPostView />} />

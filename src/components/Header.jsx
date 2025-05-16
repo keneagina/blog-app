@@ -2,41 +2,16 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header style={{ 
-      padding: '30px 0', 
-      textAlign: 'center',
-      backgroundColor: 'white',
-      border: 'none',
-      borderBottom: '1px solid #eaeaea',
-      fontFamily: "'Open Sans', sans-serif"
-    }}>
+    <header className="py-[30px] text-center bg-white border-none border-b border-[#eaeaea] font-['Open_Sans',sans-serif]">
       <div className="container">
-        <Link to="/" style={{ textDecoration: 'none' }}>
-          <div style={{
-            fontSize: '32px',
-            fontWeight: 'bold',
-            margin: '0',
-            color: '#FF6B00' 
-          }}>
+        <Link to="/" className="no-underline">
+          <div className="text-[32px] font-bold m-0 text-[#FF6B00]">
             DSMN8
           </div>
-          <h1 style={{
-            fontSize: '32px',
-            color: '#434343',
-            margin: '10px auto 0',
-            fontWeight: 'bold',
-            fontFamily: "'Open Sans', sans-serif"
-          }}>
+          <h1 className="text-[32px] text-[#434343] mx-auto mt-[10px] mb-0 font-bold font-['Open_Sans',sans-serif]">
             The Employee Advocacy Blog
           </h1>
-          <h2 style={{
-            fontSize: '20px',
-            color: '#434343',
-            fontWeight: 'normal',
-            maxWidth: '800px',
-            margin: '10px auto 0',
-            fontFamily: "'Open Sans', sans-serif"
-          }}>
+          <h2 className="text-xl text-[#434343] font-normal max-w-[800px] mx-auto mt-[10px] mb-0 font-['Open_Sans',sans-serif]">
             Expert guidance for building and scaling your employee advocacy program.
           </h2>
         </Link>

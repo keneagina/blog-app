@@ -21,46 +21,28 @@ const BlogHome = () => {
     : posts.filter(post => post.category === activeCategory);
 
   return (
-    <main style={{ backgroundColor: 'white' }}>
-      <div style={{ padding: '40px 20px', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="bg-white">
+      <div className="px-5 py-10 max-w-7xl mx-auto">
         {/* Two-column layout */}
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'row', 
-          gap: '60px',
-          flexWrap: 'wrap',
-          marginBottom: '70px'
-        }}>
+        <div className="flex flex-row flex-wrap gap-[60px] mb-[70px]">
           {/* Left column - Featured Posts (wider) */}
-          <div style={{ 
-            flex: '1.5',
-            minWidth: '300px'
-          }}>
+          <div className="flex-[1.5] min-w-[300px]">
             <FeaturedPosts filteredPosts={posts} />
           </div>
           
           {/* Right column - Trending Posts (narrower) */}
-          <div style={{ 
-            flex: '1',
-            minWidth: '300px'
-          }}>
+          <div className="flex-1 min-w-[300px]">
             <TrendingPosts filteredPosts={posts} />
           </div>
         </div>
 
         {/* Category Filter above All Posts */}
-        <div style={{ 
-          borderTop: '1px solid #eaeaea',
-          paddingTop: '30px',
-          marginBottom: '30px'
-        }}>
+        <div className="border-t border-[#eaeaea] pt-[30px] mb-[30px]">
           <CategoryFilter onCategorySelect={handleCategorySelect} />
         </div>
 
         {/* All Posts Grid - Only this component uses filtered posts */}
-        <div style={{ 
-          paddingTop: '10px'
-        }}>
+        <div className="pt-[10px]">
           <PostGrid posts={filteredPosts} initialCount={6} />
         </div>
       </div>

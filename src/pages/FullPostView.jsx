@@ -14,25 +14,10 @@ const FullPostView = () => {
   
   if (!post) {
     return (
-      <div style={{ 
-        backgroundColor: 'white', 
-        padding: '40px 20px',
-        maxWidth: '800px',
-        margin: '0 auto',
-        textAlign: 'center'
-      }}>
-        <h2 style={{ fontSize: '28px', marginBottom: '20px' }}>Post not found</h2>
-        <p style={{ fontSize: '18px', marginBottom: '30px' }}>The post you're looking for doesn't exist.</p>
-        <Link to="/" style={{
-          display: 'inline-block',
-          backgroundColor: '#FF6B00',
-          color: 'white',
-          padding: '12px 24px',
-          borderRadius: '4px',
-          textDecoration: 'none',
-          fontWeight: 'bold',
-          transition: 'background-color 0.3s ease'
-        }}>
+      <div className="bg-white py-10 px-5 max-w-[800px] mx-auto text-center">
+        <h2 className="text-[28px] mb-5">Post not found</h2>
+        <p className="text-lg mb-[30px]">The post you're looking for doesn't exist.</p>
+        <Link to="/" className="inline-block bg-[#FF6B00] text-white py-3 px-6 rounded no-underline font-bold transition-colors duration-300 hover:bg-[#E55000]">
           Return to Home
         </Link>
       </div>
@@ -40,19 +25,12 @@ const FullPostView = () => {
   }
   
   return (
-    <main style={{ backgroundColor: 'white' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
+    <main className="bg-white">
+      <div className="max-w-[1000px] mx-auto py-10 px-5">
         {/* Back to home button */}
-        <div style={{ marginBottom: '30px' }}>
-          <Link to="/" style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            color: '#666',
-            textDecoration: 'none',
-            fontWeight: '600',
-            transition: 'color 0.3s ease'
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style={{ marginRight: '8px' }}>
+        <div className="mb-[30px]">
+          <Link to="/" className="inline-flex items-center text-[#666] no-underline font-semibold transition-colors duration-300 hover:text-[#FF6B00]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="mr-2">
               <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
             </svg>
             Back to blog
@@ -60,53 +38,26 @@ const FullPostView = () => {
         </div>
         
         {/* Hero image */}
-        <div style={{ marginBottom: '40px' }}>
+        <div className="mb-10">
           <img 
             src={post.image} 
             alt={post.title} 
-            style={{
-              width: '100%',
-              height: '400px',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              marginBottom: '30px'
-            }}
+            className="w-full h-[400px] object-cover rounded-xl mb-[30px]"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
             }}
           />
           
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="max-w-[800px] mx-auto">
             <div>
-              <span style={{
-                display: 'inline-block',
-                backgroundColor: '#f0f0f0',
-                color: '#666666',
-                padding: '5px 12px',
-                borderRadius: '20px',
-                fontSize: '13px',
-                fontWeight: '600',
-                marginBottom: '15px'
-              }}>
+              <span className="inline-block bg-[#f0f0f0] text-[#666666] py-[5px] px-3 rounded-full text-[13px] font-semibold mb-[15px]">
                 {post.category}
               </span>
-              <h1 style={{ 
-                fontSize: '36px', 
-                fontWeight: 'bold',
-                color: '#333',
-                marginBottom: '20px',
-                lineHeight: '1.3'
-              }}>
+              <h1 className="text-4xl font-bold text-[#333] mb-5 leading-tight">
                 {post.title}
               </h1>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center',
-                color: '#999',
-                fontSize: '14px',
-                marginBottom: '30px'
-              }}>
+              <div className="flex items-center text-[#999] text-sm mb-[30px]">
                 <span>
                   {new Date(post.date).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -114,7 +65,7 @@ const FullPostView = () => {
                     day: 'numeric'
                   })}
                 </span>
-                <span style={{ margin: '0 10px' }}>•</span>
+                <span className="mx-[10px]">•</span>
                 <span>{Math.ceil(post.content.length / 500)} min read</span>
               </div>
             </div>
@@ -122,92 +73,41 @@ const FullPostView = () => {
         </div>
         
         {/* Post content */}
-        <article style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ 
-            fontSize: '18px',
-            lineHeight: '1.8',
-            color: '#444',
-            marginBottom: '50px'
-          }}>
+        <article className="max-w-[800px] mx-auto">
+          <div className="text-lg leading-[1.8] text-[#444] mb-[50px]">
             <p>{post.content}</p>
           </div>
           
           {/* Related posts */}
           {relatedPosts.length > 0 && (
-            <div style={{ 
-              borderTop: '1px solid #eaeaea',
-              paddingTop: '40px',
-              marginTop: '40px'
-            }}>
-              <h3 style={{ 
-                fontSize: '24px', 
-                fontWeight: 'bold',
-                color: '#333',
-                marginBottom: '25px'
-              }}>
+            <div className="border-t border-[#eaeaea] pt-10 mt-10">
+              <h3 className="text-2xl font-bold text-[#333] mb-[25px]">
                 Related Posts
               </h3>
-              <div style={{ 
-                display: 'flex',
-                gap: '30px',
-                flexWrap: 'wrap'
-              }}>
+              <div className="flex gap-[30px] flex-wrap">
                 {relatedPosts.map(relatedPost => (
                   <Link 
                     to={`/post/${relatedPost.slug}`} 
                     key={relatedPost.id}
-                    style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                      flex: '1 1 calc(50% - 15px)',
-                      minWidth: '280px'
-                    }}
+                    className="no-underline text-inherit flex-1 basis-[calc(50%-15px)] min-w-[280px]"
                   >
-                    <div style={{ 
-                      border: '1px solid #eaeaea',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                      ':hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)'
-                      }
-                    }}>
-                      <div style={{ position: 'relative' }}>
+                    <div className="border border-[#eaeaea] rounded-lg overflow-hidden transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg">
+                      <div className="relative">
                         <img 
                           src={relatedPost.image} 
                           alt={relatedPost.title}
-                          style={{
-                            width: '100%',
-                            height: '180px',
-                            objectFit: 'cover'
-                          }}
+                          className="w-full h-[180px] object-cover"
                           onError={(e) => {
                             e.target.onerror = null;
                             e.target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
                           }}
                         />
                       </div>
-                      <div style={{ padding: '20px' }}>
-                        <span style={{
-                          display: 'inline-block',
-                          backgroundColor: '#f0f0f0',
-                          color: '#666666',
-                          padding: '3px 10px',
-                          borderRadius: '20px',
-                          fontSize: '12px',
-                          fontWeight: '600',
-                          marginBottom: '10px'
-                        }}>
+                      <div className="p-5">
+                        <span className="inline-block bg-[#f0f0f0] text-[#666666] py-[3px] px-[10px] rounded-full text-xs font-semibold mb-[10px]">
                           {relatedPost.category}
                         </span>
-                        <h4 style={{ 
-                          fontSize: '18px', 
-                          fontWeight: 'bold',
-                          color: '#333',
-                          marginBottom: '10px',
-                          lineHeight: '1.4' 
-                        }}>
+                        <h4 className="text-lg font-bold text-[#333] mb-[10px] leading-tight">
                           {relatedPost.title}
                         </h4>
                       </div>
