@@ -6,14 +6,19 @@ import PostGrid from '../components/PostGrid';
 import posts from '../data/posts';
 
 const BlogHome = () => {
-  // The category selection state is maintained but doesn't affect the content
+  // State for category selection
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // Handle category selection (only for UI state, doesn't filter content)
+  // Handle category selection and filter posts
   const handleCategorySelect = (category) => {
     setActiveCategory(category);
-    console.log(`Category selected: ${category}`); // Just for demonstration
+    console.log(`Category selected: ${category}`);
   };
+
+  // Filter posts based on the selected category
+  const filteredPosts = activeCategory === 'All' 
+    ? posts 
+    : posts.filter(post => post.category === activeCategory);
 
   return (
     <main style={{ backgroundColor: 'white' }}>
@@ -52,11 +57,11 @@ const BlogHome = () => {
           <CategoryFilter onCategorySelect={handleCategorySelect} />
         </div>
 
-        {/* All Posts Grid */}
+        {/* All Posts Grid - Only this component uses filtered posts */}
         <div style={{ 
           paddingTop: '10px'
         }}>
-          <PostGrid posts={posts} initialCount={6} />
+          <PostGrid posts={filteredPosts} initialCount={6} />
         </div>
       </div>
     </main>
