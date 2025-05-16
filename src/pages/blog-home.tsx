@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import FeaturedPosts from '../components/FeaturedPosts';
-import TrendingPosts from '../components/TrendingPosts';
-import CategoryFilter from '../components/CategoryFilter';
-import PostGrid from '../components/PostGrid';
+import FeaturedPosts from '../components/featured-posts';
+import TrendingPosts from '../components/trending-posts';
+import CategoryFilter from '../components/category-filter';
+import PostGrid from '../components/post-grid';
 import posts from '../data/posts';
+import { Post } from '../components/post-card';
 
-const BlogHome = () => {
+const BlogHome: React.FC = () => {
   // State for category selection
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
 
   // Handle category selection and filter posts
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = (category: string): void => {
     setActiveCategory(category);
     console.log(`Category selected: ${category}`);
   };
 
   // Filter posts based on the selected category
-  const filteredPosts = activeCategory === 'All' 
+  const filteredPosts: Post[] = activeCategory === 'All' 
     ? posts 
     : posts.filter(post => post.category === activeCategory);
 

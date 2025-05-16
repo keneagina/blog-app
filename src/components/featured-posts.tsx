@@ -1,15 +1,20 @@
 import React from 'react';
-import PostCard from './PostCard';
+import PostCard from './post-card';
 import posts from '../data/posts';
+import { Post } from './post-card';
 
-const FeaturedPosts = ({ filteredPosts }) => {
+interface FeaturedPostsProps {
+  filteredPosts?: Post[];
+}
+
+const FeaturedPosts: React.FC<FeaturedPostsProps> = ({ filteredPosts }) => {
   // Use the filtered posts if provided, otherwise use all posts
-  const postsToUse = filteredPosts || posts;
+  const postsToUse: Post[] = filteredPosts || posts;
   
   // Get the first three posts for featured section
-  const featuredPosts = postsToUse.slice(0, 3);
-  const mainPost = featuredPosts[0];
-  const secondaryPosts = featuredPosts.slice(1, 3);
+  const featuredPosts: Post[] = postsToUse.slice(0, 3);
+  const mainPost: Post | undefined = featuredPosts[0];
+  const secondaryPosts: Post[] = featuredPosts.slice(1, 3);
   
   if (featuredPosts.length === 0) {
     return (

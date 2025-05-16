@@ -1,23 +1,28 @@
 import React from 'react';
-import PostCard from './PostCard';
+import PostCard from './post-card';
 import posts from '../data/posts';
+import { Post } from './post-card';
 
-const TrendingPosts = ({ filteredPosts }) => {
+interface TrendingPostsProps {
+  filteredPosts?: Post[];
+}
+
+const TrendingPosts: React.FC<TrendingPostsProps> = ({ filteredPosts }) => {
   // Use the filtered posts if provided, otherwise use all posts
-  const postsToUse = filteredPosts || posts;
+  const postsToUse: Post[] = filteredPosts || posts;
   
   // Get the first three posts that will be shown in featured section
-  const featuredPostIds = postsToUse.slice(0, 3).map(post => post.id);
+  const featuredPostIds: number[] = postsToUse.slice(0, 3).map(post => post.id);
   
   // Get trending posts that are not in featured section
-  const trendingPosts = postsToUse
+  const trendingPosts: Post[] = postsToUse
     .filter(post => post.trending && !featuredPostIds.includes(post.id))
     .slice(0, 5);
   
   // If we don't have enough trending posts after filtering out featured ones,
   // add more non-featured posts to reach 5 posts total
   if (trendingPosts.length < 5) {
-    const additionalPosts = postsToUse
+    const additionalPosts: Post[] = postsToUse
       .filter(post => !featuredPostIds.includes(post.id) && !trendingPosts.some(tp => tp.id === post.id))
       .slice(0, 5 - trendingPosts.length);
     
@@ -44,15 +49,6 @@ const TrendingPosts = ({ filteredPosts }) => {
           </div>
         )}
       </div>
-      
-      <style>
-        {`
-          .trending-post-title:hover {
-            color: #FF6B00 !important;
-            cursor: pointer;
-          }
-        `}
-      </style>
     </div>
   );
 };

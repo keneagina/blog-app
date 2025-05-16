@@ -1,14 +1,20 @@
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import posts from '../data/posts';
+import { Post } from '../components/post-card';
 
-const FullPostView = () => {
-  const { postSlug } = useParams();
+type PostParams = {
+  postSlug?: string;
+}
+
+const FullPostView: React.FC = () => {
+  const { postSlug } = useParams<PostParams>();
   
   // Find the post with the matching slug
-  const post = posts.find(p => p.slug === postSlug);
+  const post: Post | undefined = posts.find(p => p.slug === postSlug);
   
   // Get related posts (same category, excluding current post)
-  const relatedPosts = posts
+  const relatedPosts: Post[] = posts
     .filter(p => p.category === post?.category && p.id !== post?.id)
     .slice(0, 2);
   
@@ -43,9 +49,10 @@ const FullPostView = () => {
             src={post.image} 
             alt={post.title} 
             className="w-full h-[400px] object-cover rounded-xl mb-[30px]"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
+            onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
             }}
           />
           
@@ -97,9 +104,10 @@ const FullPostView = () => {
                           src={relatedPost.image} 
                           alt={relatedPost.title}
                           className="w-full h-[180px] object-cover"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
+                          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
                           }}
                         />
                       </div>

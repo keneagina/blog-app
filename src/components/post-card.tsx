@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
-const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
+// Define types for post data
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  category: string;
+  date: string;
+  image: string;
+  excerpt: string;
+  content: string;
+  trending?: boolean;
+}
+
+// Define props for the PostCard component
+interface PostCardProps {
+  post: Post;
+  variant?: 'standard' | 'trending' | 'featured';
+  size?: 'small' | 'medium' | 'large';
+}
+
+const PostCard: React.FC<PostCardProps> = ({ post, variant = 'standard', size = 'medium' }) => {
   // Get card classes based on variant and size
-  const getCardClasses = () => {
+  const getCardClasses = (): string => {
     // Base classes
     let classes = "bg-white rounded-lg overflow-hidden h-full flex";
     
@@ -11,7 +31,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
     if (variant === 'trending') {
       classes += " flex-row shadow-none border-none";
     } else {
-      classes += " flex-col shadow-md border border-[#eaeaea]";
+      classes += " flex-col shadow-md border border-[#eaeaea] hover:shadow-xl";
     }
     
     // Size-specific classes
@@ -23,7 +43,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
   };
 
   // Image rendering with tailwind classes
-  const renderImage = () => {
+  const renderImage = (): ReactElement => {
     let imageContainerClasses = "relative";
     let imageClasses = "w-full object-cover";
     
@@ -32,7 +52,8 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
       imageClasses += " w-[150px] h-[120px] rounded-md flex-shrink-0";
     } else {
       imageContainerClasses += " w-full";
-      imageClasses += ` h-${size === 'large' ? '[380px]' : '[180px]'}`;
+      // Reduced image height to make card shorter
+      imageClasses += variant === 'standard' ? " h-[220px]" : ` h-${size === 'large' ? '[380px]' : '[180px]'}`;
     }
 
     return (
@@ -41,9 +62,10 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
           src={post.image}
           alt={post.title}
           className={imageClasses}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
+          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+            const target = e.target as HTMLImageElement;
+            target.onerror = null;
+            target.src = 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1000&q=80';
           }}
         />
         {variant === 'featured' && size === 'large' && (
@@ -55,7 +77,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
     );
   };
 
-  const renderContent = () => {
+  const renderContent = (): ReactElement => {
     // Determine content padding based on variant and size
     let contentClasses = "flex flex-col flex-grow";
     
@@ -70,16 +92,17 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
     // Determine title size based on variant and size
     const titleClasses = `
       ${variant === 'trending' ? 'text-xl font-normal' : 'font-bold'} 
-      ${(variant === 'featured' && size === 'large') ? 'text-[28px]' : 'text-lg'}
-      ${variant === 'featured' && size === 'large' ? 'mb-[15px]' : 'mb-[10px]'}
-      text-[#333] leading-tight transition-colors
+      ${(variant === 'featured' && size === 'large') ? 'text-[28px]' : 'text-xl'}
+      ${variant === 'featured' && size === 'large' ? 'mb-[15px]' : 'mb-[12px]'}
+      text-[#333] leading-tight transition-colors hover:text-[#FF6B00]
       ${variant === 'trending' ? 'm-0' : ''}
+      ${variant === 'standard' ? 'line-clamp-2' : ''}
     `;
 
     return (
       <div className={contentClasses}>
         {variant !== 'trending' && (
-          <div className={`mb-${variant === 'featured' && size === 'large' ? '[15px]' : '[10px]'}`}>
+          <div className="mb-[10px]">
             <span className={`
               inline-block bg-[#f0f0f0] text-[#666666] rounded-full font-semibold
               ${variant === 'featured' && size === 'large' ? 'px-3 py-[5px] text-[13px]' : 'px-[10px] py-[3px] text-xs'}
@@ -89,7 +112,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
           </div>
         )}
 
-        <h3 className={`${titleClasses} ${variant === 'trending' ? "trending-post-title" : "post-title"}`}>
+        <h3 className={titleClasses}>
           {post.title}
         </h3>
 
@@ -99,10 +122,16 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
           </p>
         )}
 
+        {variant === 'standard' && (
+          <p className="text-sm text-[#666] mb-5 leading-relaxed line-clamp-3">
+            {post.excerpt}
+          </p>
+        )}
+
         {variant !== 'trending' && (
           <div className={`
-            flex justify-between items-center
-            ${variant === 'featured' && size === 'large' ? '' : 'mt-auto pt-[15px]'}
+            flex justify-between items-center mt-auto
+            ${variant === 'featured' && size === 'large' ? '' : 'pt-[12px] border-t border-[#f0f0f0]'}
           `}>
             <span className={`
               ${variant === 'featured' && size === 'large' ? 'text-sm' : 'text-xs'} 
@@ -115,7 +144,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
               })}
             </span>
             <span className={`
-              text-[#666666] font-semibold flex items-center read-more
+              text-[#666666] font-semibold flex items-center hover:text-[#FF6B00] transition-colors
               ${variant === 'featured' && size === 'large' ? 'text-[15px]' : 'text-xs'}
             `}>
               Read more
@@ -142,7 +171,7 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
   };
 
   // Determine order of image and content for trending variant
-  const renderCardContent = () => {
+  const renderCardContent = (): ReactElement => {
     if (variant === 'trending') {
       return (
         <>
@@ -162,28 +191,13 @@ const PostCard = ({ post, variant = 'standard', size = 'medium' }) => {
   const cardClasses = getCardClasses();
 
   return (
-    <div className={`post-card ${cardClasses} transition-transform duration-300`}>
+    <div className={`${cardClasses} transition-transform duration-300 hover:-translate-y-[5px]`}>
       <Link 
         to={`/post/${post.slug}`} 
         className={`no-underline text-inherit flex ${variant === 'trending' ? 'flex-row' : 'flex-col'} h-full w-full`}
       >
         {renderCardContent()}
       </Link>
-
-      <style>
-        {`
-          .post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: ${variant === 'trending' ? 'none' : '0 10px 20px rgba(0, 0, 0, 0.1)'};
-          }
-          .post-title:hover, .trending-post-title:hover {
-            color: #FF6B00 !important;
-          }
-          .read-more:hover {
-            color: #FF6B00 !important;
-          }
-        `}
-      </style>
     </div>
   );
 };

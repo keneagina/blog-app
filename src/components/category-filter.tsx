@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
-const CategoryFilter = ({ onCategorySelect }) => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+interface CategoryFilterProps {
+  onCategorySelect: (category: string) => void;
+}
+
+const CategoryFilter: React.FC<CategoryFilterProps> = ({ onCategorySelect }) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   
   // Fixed list of 5 categories (matching those in posts.js)
-  const categories = [
+  const categories: string[] = [
     'All',
     'Employee Advocacy',
     'Marketing',
@@ -13,7 +17,7 @@ const CategoryFilter = ({ onCategorySelect }) => {
     'Leadership'
   ];
   
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category: string): void => {
     setSelectedCategory(category);
     onCategorySelect(category);
   };

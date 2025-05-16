@@ -1,5 +1,7 @@
+import { Post } from '../components/post-card';
+
 // Helper function to shuffle an array
-function shuffleArray(array) {
+function shuffleArray<T>(array: T[]): T[] { // dynamically generates which posts should be marked as trending
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -9,7 +11,7 @@ function shuffleArray(array) {
 }
 
 // Define only 5 categories to use
-const categories = [
+const categories: string[] = [
   'Employee Advocacy',
   'Marketing',
   'Social Media',
@@ -18,13 +20,13 @@ const categories = [
 ];
 
 // Helper function to get a random category
-function getRandomCategory() {
+function getRandomCategory(): string {
   const randomIndex = Math.floor(Math.random() * categories.length);
   return categories[randomIndex];
 }
 
 // Define all posts without trending flag initially and with random categories
-const allPosts = [
+const allPosts: Post[] = [
   {
     id: 1,
     title: 'Inside Barclays\' Viral Creator Club',
@@ -221,20 +223,18 @@ const allPosts = [
     slug: 'future-employee-advocacy',
     category: getRandomCategory(),
     date: '2023-03-10',
+
     image: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1000&q=80',
     excerpt: 'Explore emerging trends and technologies shaping the next generation of employee advocacy programs.',
     content: 'The employee advocacy landscape is evolving rapidly, with emerging technologies and changing workplace dynamics creating new possibilities for program innovation. This forward-looking analysis examines the key trends that will shape advocacy over the next three to five years, including AI-powered content personalization, deeper integration with marketing technology stacks, and the rise of video-first employee content. We explore how advanced analytics are enabling more precise measurement of advocacy impact, while new platform capabilities are creating opportunities for more authentic and diverse employee voices. The article also addresses how shifts in workplace models, from remote work to the gig economy, are necessitating new approaches to advocacy engagement and activation. By understanding these coming changes, program leaders can position their initiatives for continued growth and adaptation.'
   }
 ];
+// Mark a few random posts as trending
+const trendingCount = 5;
+const shuffledPosts = shuffleArray(allPosts); 
+for (let i = 0; i < Math.min(trendingCount, shuffledPosts.length); i++) {
+  shuffledPosts[i].trending = true;
+}
 
-// Randomly select 5 posts to mark as trending
-const shuffledIndexes = shuffleArray([...Array(allPosts.length).keys()]);
-const trendingIndexes = shuffledIndexes.slice(0, 5);
-
-// Add trending flag to the randomly selected posts
-export const posts = allPosts.map((post, index) => ({
-  ...post,
-  trending: trendingIndexes.includes(index)
-}));
-
-export default posts; 
+// Export the array of posts
+export default allPosts; 
